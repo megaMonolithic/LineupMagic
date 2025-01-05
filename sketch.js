@@ -68,13 +68,14 @@ function drawTopNav() {
     .position(0, 0);
 
   const titleBar = createDiv(
-    "<span class='material-icons' style='background:#000; padding:4px; margin-right:5px;'>sports_baseball</span>LineupMagic"
+    "<span class='material-icons' style='background:#000; padding:4px; margin-right:5px;color:#fff'>sports_baseball</span>LineupMagic"
   )
     .parent(topNavContainer)
     .style("background", "#444")
-    .style("color", "#FFF")
+    .style("color", "#9cf0ff")
     .style("display", "flex")
     .style("font-family", "arial")
+    .style("font-weight:bold")
     .style("align-items", "center");
   const baseball = createSpan("auto_awesome")
     .class("material-icons")
