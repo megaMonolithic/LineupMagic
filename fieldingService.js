@@ -4,6 +4,7 @@ function placePlayers(players, positions, apiKey) {
 }
 
 async function getAiPlayerPositions(players, positions, apiKey) {
+  console.log('making call to chatgpt to place players');
   const simplePositions = positions.map((position) => ({
     label: position.label,
     player: position.player?.id,
@@ -52,6 +53,7 @@ async function getAiPlayerPositions(players, positions, apiKey) {
 }
 
 function getPlayerPositions(players, positions) {
+  console.log('determining player positions');
   return new Promise((resolve, reject) => {
     const assignedPlayers = new Set(
       positions
@@ -67,11 +69,11 @@ function getPlayerPositions(players, positions) {
         // Find the best player for this position (lowest weight)
         let bestPlayer = null;
         let bestWeight = Infinity;
-        console.log(`===== postion ${position.name} ========`);
+        console.debug(`===== postion ${position.name} ========`);
 
         availablePlayers.forEach((player) => {
           const weight = calculateWeight(player, position.label);
-          console.log(`player ${player.name} weight = ${weight}`);
+          console.debug(`player ${player.name} weight = ${weight}`);
           if (weight < bestWeight) {
             bestWeight = weight;
             bestPlayer = player;

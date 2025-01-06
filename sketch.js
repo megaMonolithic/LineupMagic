@@ -40,6 +40,7 @@ function setup() {
   //draw ui elements
   drawUi();
   createAutoFieldingButton();
+  drawResetButton();
   createTeamButton();
   //createSettingsPanel(); // Initialize the settings panel
   //createSettingsLink(); // Create the settings link
@@ -148,10 +149,12 @@ function drawInnings() {
 }
 
 function selectTab(selectedIndex, container) {
-  // Get all tab buttons
+  //set the current inning
   currentInning = selectedIndex;
+  console.log(`selected inning ${currentInning}`);
+
+  // Get all tab buttons
   const tabs = container.elt.querySelectorAll(".inning-tab");
-  //TODO currentInning = index;
 
   // Update the classes for tabs
   tabs.forEach((tab, index) => {
@@ -233,7 +236,7 @@ function drawAllPlayerPositions() {
 }
 
 function drawPlayerPosition(position, currentTeam) {
-  console.log(`drawing position ${JSON.stringify(position)}`);
+  //console.log(`drawing position ${JSON.stringify(position)}`);
   const { label, name, player } = position;
   const { x, y } = positionLocations[position.label];
 
@@ -318,6 +321,18 @@ function createTeamButton() {
     });
 }
 
+function drawResetButton() {
+  const resetBtn = createButton('Reset')
+  .position(width/2+65, height / 2 + 130)
+  .class('reset-btn')
+  .mousePressed(() => {
+    console.log('reset inning');
+    resetPositions(teams[currentTeam].games[currentGame].innings[currentInning].positions);
+    drawUi();
+    saveTeams(teams);
+  })
+}
+
 function createAutoFieldingButton() {
   let positions =
     teams[currentTeam].games[currentGame].innings[currentInning].positions;
@@ -333,7 +348,7 @@ function createAutoFieldingButton() {
     autoFieldingBtn.remove();
     const loadingIcon = createDiv("")
       .class("loading-icon")
-      .position(width - 110, height / 2 + 20);
+      .position(width / 2 - 30, height / 2 + 120);
     placePlayers(teams[currentTeam].players, positions, apiKey).then(() => {
       loadingIcon.remove();
       drawUi();

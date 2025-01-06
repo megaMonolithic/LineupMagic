@@ -353,3 +353,10 @@ function saveTeams(teams) {
   console.log('saving teams data');
   localStorage.setItem('teams', JSON.stringify(teams));
 }
+
+function resetPositions(positions) {
+  positions.forEach(position => {
+    console.log(`clearing ${position.player.name} from ${position.name}`);
+    position.player = undefined;
+  });
+}

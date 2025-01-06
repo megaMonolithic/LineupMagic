@@ -225,3 +225,10 @@ select {
   flex-direction: row;
   background-color: rgba(255, 255, 255, 0.9);
 }
+
+.reset-btn {
+  color: #007bff;
+  background-color: transparent;
+  border: none;
+  text-decoration: underline; 
+}
