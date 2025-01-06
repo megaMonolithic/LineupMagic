@@ -36,7 +36,6 @@ function setup() {
 
   //load teams
   teams = loadTeams();
-  console.log(`teams = ${JSON.stringify(teams)}`);
 
   //draw ui elements
   drawUi();
@@ -304,6 +303,7 @@ function drawPlayerPosition(position, currentTeam) {
 
     drawUi();
     scrollToPageTop();
+    saveTeams(teams);
   });
 
   pop();
@@ -326,6 +326,8 @@ function createAutoFieldingButton() {
     `<span title="Determine players for open positions" class="material-icons">${autoFieldingIco}</span>`
   ).class("fielding-button");
   autoFieldingBtn.position(width / 2 - 30, height / 2 + 120);
+
+  // handle autoFielding click event
   autoFieldingBtn.mousePressed(() => {
     console.log("Auto Fielding Button Clicked");
     autoFieldingBtn.remove();
@@ -336,6 +338,7 @@ function createAutoFieldingButton() {
       loadingIcon.remove();
       drawUi();
       createAutoFieldingButton();
+      saveTeams(teams);
     });
   });
 }
