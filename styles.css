@@ -232,3 +232,12 @@ select {
   border: none;
   text-decoration: underline; 
 }
+
+.top-nav {
+  background: #444;
+  color: #9cf0ff;
+  display: flex;
+  font-family: arial;
+  font-weight: bold;
+  align-items: center;
+}

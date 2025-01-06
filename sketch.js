@@ -71,12 +71,7 @@ function drawTopNav() {
     "<span class='material-icons' style='background:#000; padding:4px; margin-right:5px;color:#fff'>sports_baseball</span>LineupMagic"
   )
     .parent(topNavContainer)
-    .style("background", "#444")
-    .style("color", "#9cf0ff")
-    .style("display", "flex")
-    .style("font-family", "arial")
-    .style("font-weight:bold")
-    .style("align-items", "center");
+    .class("top-nav");
   const baseball = createSpan("auto_awesome")
     .class("material-icons")
     .style("color", "#EA33F7")
@@ -92,8 +87,19 @@ function drawTopNav() {
     .class("team-selection")
     .parent(teamGameContainer);
 
-  teams.forEach((team, index) => teamSelection.option(team.name, index));
+  teams.forEach((team, index) => 
+    teamSelection.option(team.name, index));
+
   teamSelection.selected(currentTeam);
+  teamSelection.changed(() => {
+    currentTeam = teamSelection.value();
+    console.log(`selected team ${currentTeam}`);
+    topNavContainer.remove();
+    drawUi();
+    topNavContainer.remove();
+    drawTopNav();    
+  });
+
 
   //game selector
   const gameSelection = createSelect()
@@ -101,9 +107,16 @@ function drawTopNav() {
     .parent(teamGameContainer);
 
   teams[currentTeam].games.forEach((game, index) =>
-    gameSelection.option(game.name, index)
-  );
+    gameSelection.option(game.name, index));
+
   gameSelection.selected(currentGame);
+  gameSelection.changed(() => {
+    currentGame = gameSelection.value();
+    console.log(`selected game ${currentGame}`);
+    drawUi();
+    topNavContainer.remove();
+    drawTopNav();
+  });
 
   //innings
 
