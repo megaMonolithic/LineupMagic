@@ -87,8 +87,7 @@ function drawTopNav() {
     .class("team-selection")
     .parent(teamGameContainer);
 
-  teams.forEach((team, index) => 
-    teamSelection.option(team.name, index));
+  teams.forEach((team, index) => teamSelection.option(team.name, index));
 
   teamSelection.selected(currentTeam);
   teamSelection.changed(() => {
@@ -97,9 +96,8 @@ function drawTopNav() {
     topNavContainer.remove();
     drawUi();
     topNavContainer.remove();
-    drawTopNav();    
+    drawTopNav();
   });
-
 
   //game selector
   const gameSelection = createSelect()
@@ -107,7 +105,8 @@ function drawTopNav() {
     .parent(teamGameContainer);
 
   teams[currentTeam].games.forEach((game, index) =>
-    gameSelection.option(game.name, index));
+    gameSelection.option(game.name, index)
+  );
 
   gameSelection.selected(currentGame);
   gameSelection.changed(() => {
@@ -335,15 +334,17 @@ function createTeamButton() {
 }
 
 function drawResetButton() {
-  const resetBtn = createButton('Reset')
-  .position(width/2+65, height / 2 + 130)
-  .class('reset-btn')
-  .mousePressed(() => {
-    console.log('reset inning');
-    resetPositions(teams[currentTeam].games[currentGame].innings[currentInning].positions);
-    drawUi();
-    saveTeams(teams);
-  })
+  const resetBtn = createButton("Reset")
+    .position(width / 2 + 65, height / 2 + 130)
+    .class("reset-btn")
+    .mousePressed(() => {
+      console.log("reset inning");
+      resetPositions(
+        teams[currentTeam].games[currentGame].innings[currentInning].positions
+      );
+      drawUi();
+      saveTeams(teams);
+    });
 }
 
 function createAutoFieldingButton() {
