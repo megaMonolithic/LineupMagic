@@ -1,6 +1,8 @@
 function placePlayers(players, positions, apiKey) {
-  if (apiKey) return getAiPlayerPositions(players, positions, apiKey);
-  else return getPlayerPositions(players, positions);
+  if (apiKey) 
+    return getAiPlayerPositions(players, positions, apiKey);
+  else 
+    return getPlayerPositions(players, positions);
 }
 
 async function getAiPlayerPositions(players, positions, apiKey) {
@@ -94,8 +96,11 @@ function getPlayerPositions(players, positions) {
 
 // Calculate weight for a player's preference for a position
 function calculateWeight(player, positionLabel) {
+  console.debug("position=" + positionLabel + ", player=" + JSON.stringify(player));
   const positionRank =
+    //player.positions.split(",").indexOf(positionLabel.toString()) + 1;
     player.positions.split(",").indexOf(positionLabel.toString()) + 1;
+  console.debug("103:positionRank=" + positionRank);
   //return positionRank >= 0 ? player.rank * 10 + positionRank : Infinity;
   return positionRank > 0 ? player.rank * positionRank : 1000000;
 }

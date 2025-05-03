@@ -12,6 +12,8 @@ let positionLocations;
 
 let teams;
 
+let teamPanel;
+
 function setup() {
   // setup the canvas
   createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -31,7 +33,8 @@ function setup() {
     { x: width / 2 - 170, y: height / 2 + 50 }, //out2
     { x: width / 2 - 170, y: height / 2 + 75 }, //out3
     { x: width / 2 - 170, y: height / 2 + 100 }, //out4
-    { x: width / 2 - 150, y: height / 2 + 125 }, //out5
+    { x: width / 2 - 170, y: height / 2 + 125 }, //out5
+    { x: width / 2 - 170, y: height / 2 + 150 }, //out6
   ];
 
   //load teams
@@ -41,6 +44,7 @@ function setup() {
   drawUi();
   createAutoFieldingButton();
   drawResetButton();
+  createTeamPanel();
   createTeamButton();
   //createSettingsPanel(); // Initialize the settings panel
   //createSettingsLink(); // Create the settings link
@@ -92,6 +96,8 @@ function drawTopNav() {
   teamSelection.selected(currentTeam);
   teamSelection.changed(() => {
     currentTeam = teamSelection.value();
+    currentGame = 0;
+    currentInning = 0;
     console.log(`selected team ${currentTeam}`);
     topNavContainer.remove();
     drawUi();
@@ -111,6 +117,7 @@ function drawTopNav() {
   gameSelection.selected(currentGame);
   gameSelection.changed(() => {
     currentGame = gameSelection.value();
+    currentInning = 0;
     console.log(`selected game ${currentGame}`);
     drawUi();
     topNavContainer.remove();
@@ -262,7 +269,7 @@ function drawPlayerPosition(position, currentTeam) {
     // Draw label background
     labelWidth = textWidth(player.name) + 27; // Calculate dynamic width for text
     labelHeight = 20;
-    fill(255, 255, 255, 140); // White background with some opacity
+    fill(255, 255, 255, 160); // White background with some opacity
     noStroke();
     rectMode(CORNER);
     rect(0, -labelHeight / 2, labelWidth, labelHeight);
@@ -313,8 +320,10 @@ function drawPlayerPosition(position, currentTeam) {
     });
 
     // set the selected player to the position
-    if (playerSelection.value() === "none") position.player = undefined;
-    else position.player = teams[currentTeam].players[playerSelection.value()];
+    if (playerSelection.value() === "none") 
+      position.player = undefined;
+    else 
+      position.player = teams[currentTeam].players[playerSelection.value()];
 
     drawUi();
     scrollToPageTop();
@@ -330,7 +339,15 @@ function createTeamButton() {
     .position(width - 35, height / 2)
     .mousePressed(() => {
       console.log("Team Button Clicked");
+      teamPanel.toggleClass('team-panel-expand');
     });
+}
+
+function createTeamPanel() {
+  teamPanel = createDiv("")
+  .id("teamPanel")
+  .style('height', CANVAS_HEIGHT)
+  .class("team-panel");
 }
 
 function drawResetButton() {
