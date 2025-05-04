@@ -385,8 +385,8 @@ function drawTeamPanel(isDisplayed) {
       .child(createP(player.order))
       .child(createPlayerDownBtn(player, players))
       .child(createPlayerItemBtn(player))
-      //.child(createPlayerAvailableBtn(player).style('margin-left:auto'))
-      .child(createReduceRankBtn(player).style('margin-left:auto'))
+      .child(createPlayerAvailableBtn(player).style('margin-left:auto'))
+      .child(createReduceRankBtn(player))
       .child(createP(player?.rank))
       .child(createAddRankBtn(player))
     });
@@ -456,6 +456,7 @@ function createPlayerDownBtn(player, players) {
 function createAddRankBtn(player) {
   return createButton('<span class="material-icons">add_circle_outline</span>')
   .class('player-item-btn')
+  .style('padding-right:10px')
   .mousePressed(() => {
     if(player.rank < teams[currentTeam].players.length)
       player.rank++;
