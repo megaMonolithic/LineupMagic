@@ -87,8 +87,9 @@ let hardcodedTeams = [
       },                  
     ],
     games: [
-      {
+      { //@ franks
         name: "@ Kilbourne Franks", //14max
+        availablePlayers: [0,1,2,3,4,5,6,7,8,9,10,11],
         innings: [
           {
             label: "1",
@@ -212,8 +213,9 @@ let hardcodedTeams = [
           },
         ],
       },
-      {
+      { //v Bellepoint
         name: "v Bellepoint Swartzbaugh", //14max
+        availablePlayers: [0,1,2,3,4,5,6,7,8,9,10,11],
         innings: [
           {
             label: "1",
@@ -374,6 +376,7 @@ let hardcodedTeams = [
     games: [
       {
         name: "@ Ashley Votaw", //14max
+        availablePlayers: [0,1,2,3,4,5,6,7,8,9],
         innings: [
           {
             label: "1",
@@ -469,6 +472,7 @@ let hardcodedTeams = [
       },
       {
         name: "v Delaware Arrington", //14max
+        availablePlayers: [0,1,2,3,4,5,6,7,8,9],
         innings: [
           {
             label: "1",

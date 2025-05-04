@@ -8,6 +8,7 @@ let playerPanel;
 let currentTeam = 0;
 let currentGame = 0;
 let currentInning = 0;
+let currentPlayer = undefined;
 let positionLocations;
 
 let teams;
@@ -44,7 +45,7 @@ function setup() {
   drawUi();
   createAutoFieldingButton();
   drawResetButton();
-  createTeamPanel();
+  drawTeamPanel();
   createTeamButton();
   //createSettingsPanel(); // Initialize the settings panel
   //createSettingsLink(); // Create the settings link
@@ -343,11 +344,137 @@ function createTeamButton() {
     });
 }
 
-function createTeamPanel() {
+function drawTeamPanel(isDisplayed) {
+  //remove the old team panel and all it's elements
+  if(teamPanel)
+    teamPanel.remove();
+  //create a new team panel
   teamPanel = createDiv("")
   .id("teamPanel")
   .style('height', CANVAS_HEIGHT)
   .class("team-panel");
+
+  if(isDisplayed)
+    teamPanel.toggleClass('team-panel-expand');
+
+  //draw close button
+  const closeTeamPanelBtn = createButton("<span class='material-icons'>close</span>")
+    .position(width - 50, 0)
+    .class("close-btn")
+    .parent(teamPanel)
+    .mousePressed(() => {
+      console.debug("closing team panel");
+      drawUi();
+      teamPanel.toggleClass('team-panel-expand');
+    });
+
+
+    //draw team
+    const teamList = createDiv("")
+    .id("teamList")
+    .class("team-list")
+    .parent(teamPanel);
+
+    const players = teams[currentTeam].players;
+    players?.forEach(player => {
+      createDiv()
+      .parent(teamList)
+      .class("player-item")
+      //.child(createPlayerDeleteBtn(player))
+      .child(createPlayerUpBtn(player, players))
+      .child(createP(player.order))
+      .child(createPlayerDownBtn(player, players))
+      .child(createPlayerItemBtn(player))
+      .child(createPlayerAvailableBtn(player).style('margin-left:auto'))
+      .child(createReduceRankBtn(player))
+      .child(createP(player?.rank))
+      .child(createAddRankBtn(player))
+    });
+
+    const playerDiv = createDiv()
+    .class('player-item')
+    .parent(teamPanel);
+
+    const playerNameInp = createInput('')
+    .attribute('placeholder', '.. Add new player ..')
+    .style('margin: 15px 15px 15px 20px')
+    .parent(playerDiv);
+    
+    const playerSave = createButton('Save')
+    //.class("player-item-btn")
+    .parent(playerDiv)
+    //.style("padding: 0px 5px 0px 0px")
+    .mousePressed(() => {
+      console.log("Save Player Button Clicked");
+    });
+    
+}
+
+function createPlayerAvailableBtn(player) { 
+  const availablePlayers = teams[currentTeam].games[currentGame].availablePlayers;
+  const isPlayerAvailable = availablePlayers.includes(player.id)
+  return createCheckbox('', isPlayerAvailable)
+  .class("player-item-btn")
+  .style("padding: 0px 15px 0px 0px")
+  .mousePressed(() => {
+    if(!isPlayerAvailable) 
+      // add player to availability
+      availablePlayers.push(player.id)
+    else 
+      // remove player from availability
+      availablePlayers.splice(availablePlayers.indexOf(player.id), 1);
+    saveTeams(teams);
+    console.log("Player Game Availability changed");
+  });
+}
+
+function createPlayerDeleteBtn(player) { 
+  return createButton('<span class="material-icons">delete</span>')
+  .class("player-item-btn")
+  .style("padding: 0px 15px 0px 0px")
+  .mousePressed(() => {
+    console.log("Delete Player Button Clicked");
+  });
+}
+
+function createPlayerItemBtn(player) { 
+  return createButton(player?.name)
+  .class('player-item-btn')
+  .style('padding-left: 5px');
+}
+
+function createPlayerUpBtn(player, players) { 
+  return createButton('<span class="material-icons">expand_less</span>')
+  .class('player-item-btn');
+}
+
+function createPlayerDownBtn(player, players) { 
+  return createButton('<span class="material-icons">expand_more</span>')
+  .class('player-item-btn');
+}
+
+function createAddRankBtn(player) {
+  return createButton('<span class="material-icons">add_circle_outline</span>')
+  .class('player-item-btn')
+  .mousePressed(() => {
+    if(player.rank < teams[currentTeam].players.length)
+      player.rank++;
+    saveTeams(teams);
+    console.log("Added Rank for " + player.name + " to " + player.rank);
+    drawTeamPanel(true);
+  });
+ }
+
+function createReduceRankBtn(player) { 
+  return createButton('<span class="material-icons">remove_circle_outline</span>')
+  .class('player-item-btn')
+  .mousePressed(() => {
+    if(player.rank > 1)
+      player.rank--;
+    saveTeams(teams);
+    console.log("Reduced Rank for " + player.name + " to " + player.rank);
+    drawTeamPanel(true);
+  });  
 }
 
 function drawResetButton() {
