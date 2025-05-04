@@ -45,7 +45,7 @@ function setup() {
   drawUi();
   createAutoFieldingButton();
   drawResetButton();
-  drawTeamPanel();
+  //drawTeamPanel();
   createTeamButton();
   //createSettingsPanel(); // Initialize the settings panel
   //createSettingsLink(); // Create the settings link
@@ -340,6 +340,7 @@ function createTeamButton() {
     .position(width - 35, height / 2)
     .mousePressed(() => {
       console.log("Team Button Clicked");
+      drawTeamPanel(false);
       teamPanel.toggleClass('team-panel-expand');
     });
 }
@@ -416,7 +417,7 @@ function createPlayerAvailableBtn(player) {
   return createCheckbox('', isPlayerAvailable)
   .class("player-item-btn")
   .style("padding: 0px 15px 0px 0px")
-  .mousePressed(() => {
+  .changed(() => {
     if(!isPlayerAvailable) 
       // add player to availability
       availablePlayers.push(player.id)
