@@ -386,7 +386,7 @@ function drawTeamPanel(isDisplayed) {
       .child(createP(player.order))
       .child(createPlayerDownBtn(player, players))
       .child(createPlayerItemBtn(player))
-      //.child(createPlayerAvailableBtn(player).style('margin-left:auto'))
+      .child(createPlayerAvailableBtn(player).style('margin-left:auto'))
       .child(createReduceRankBtn(player))
       .child(createP(player?.rank))
       .child(createAddRankBtn(player))
@@ -412,8 +412,21 @@ function drawTeamPanel(isDisplayed) {
 }
 
 function createPlayerAvailableBtn(player) { 
+  /*
+  checkboxIcon = createDiv('<span class="material-icons">check_box_outline_blank</span>')
+    .mousePressed(() => {
+      // Check if the currently displayed icon is checked or unchecked
+      if (checkboxIcon.elt.innerHTML.includes('check_box_outline_blank')) {
+        // If the unchecked icon is displayed, change to checked icon
+        checkboxIcon.html('<span class="material-icons">check_box</span>');
+      } else {
+        // Otherwise, change to unchecked icon
+        checkboxIcon.html('<span class="material-icons">check_box_outline_blank</span>');
+      }
+    });  
+  */
   const availablePlayers = teams[currentTeam].games[currentGame].availablePlayers;
-  const isPlayerAvailable = availablePlayers.includes(player.id)
+  const isPlayerAvailable = availablePlayers.includes(player.id);
   return createCheckbox('', isPlayerAvailable)
   .class("player-item-btn")
   .style("padding: 0px 15px 0px 0px")
