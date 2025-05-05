@@ -386,7 +386,7 @@ function drawTeamPanel(isDisplayed) {
       .child(createP(player.order))
       .child(createPlayerDownBtn(player, players))
       .child(createPlayerItemBtn(player))
-      .child(createPlayerAvailableBtn(player).style('margin-left:auto'))
+      //.child(createPlayerAvailableBtn(player).style('margin-left:auto'))
       .child(createReduceRankBtn(player))
       .child(createP(player?.rank))
       .child(createAddRankBtn(player))
