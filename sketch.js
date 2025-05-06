@@ -412,7 +412,7 @@ function drawTeamPanel(isDisplayed) {
 
     const playerNameInp = createInput('')
     .attribute('placeholder', '.. Add new player ..')
-    .style('margin: 15px 15px 15px 20px')
+    .style('margin: 5px 15px 5px 20px')
     .parent(playerDiv);
     
     const playerSave = createButton('Save')
