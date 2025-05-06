@@ -269,7 +269,7 @@ select {
 }
 
 div.team-list {
-  max-height: 360px; 
+  max-height: 380px; 
   margin-top: 40px;
   margin-left: 10px;
   margin-right: 10px;
@@ -301,5 +301,5 @@ p.team-list {
 }
 
 .player-item p {
-  margin-top:2px;
+  margin-top:3px;
 }
