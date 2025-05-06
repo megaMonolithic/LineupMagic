@@ -192,15 +192,19 @@ function drawBaseballField(x, y, fieldWidth, fieldHeight, color) {
   translate(x, y); // Move the field to the specified coordinates
 
   // Draw the outfield as a slice of a circle
+  noStroke();
   if (color == "GREEN") fill(34, 139, 34); // Green grass color
   if (color == "BROWN") fill(210, 180, 140); // Green grass color
-  noStroke();
+  if (color == "NONE") {
+    stroke(220,220,220);
+    noFill();
+  }
   arc(0, 0, fieldWidth, fieldHeight, PI - radians(-45), PI + radians(135), PIE); // Slice for the outfield
 
   pop();
 }
 
-function drawBaseballDiamond(x, y, diamondWidth, diamondHeight) {
+function drawBaseballDiamond(x, y, diamondWidth, diamondHeight, color="GREEN") {
   push();
   translate(x, y); // Move the diamond to the specified coordinates
 
@@ -208,7 +212,11 @@ function drawBaseballDiamond(x, y, diamondWidth, diamondHeight) {
   const halfHeight = diamondHeight / 2 - 10;
 
   // Draw the diamond outline
-  fill(34, 139, 34); // Green field color
+  if(color === "GREEN")
+    fill(34, 139, 34); // Green field color
+  else
+    fill(244,244,244);
+
   strokeWeight(0);
   beginShape();
   vertex(-halfWidth, 0); // Left point (3rd base)
@@ -381,6 +389,7 @@ function drawTeamPanel(isDisplayed) {
     .class("team-list")
     .parent(teamPanel);
 
+    const playerFieldingControl = createDiv();
     const players = teams[currentTeam].players;
     players?.forEach(player => {
       createDiv()
@@ -413,8 +422,17 @@ function drawTeamPanel(isDisplayed) {
     .mousePressed(() => {
       console.log("Save Player Button Clicked");
     });
+
+    //TODO draw delete button for existing player
+    
+    drawPlayerFieldingControl(playerFieldingControl);
     
 }
+
+function drawPlayerFieldingControl(playerFieldingControl, player=undefined) {
+  playerFieldingControl.parent(teamPanel).style("border", "1px solid red").style("display:-cell;text-align:center");
+  const field = createImg("/field.png").parent(playerFieldingControl);
+};
 
 function createPlayerAvailableBtn(player) { 
   const availablePlayers = teams[currentTeam].games[currentGame].availablePlayers;
