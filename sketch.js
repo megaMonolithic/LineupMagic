@@ -297,18 +297,24 @@ function drawPlayerPosition(position, currentTeam) {
     text(label, 0, 0);
   }
 
-  //
+  // draw the player selection dropdown
   const playerSelection = createSelect()
     .position(x - 20, y - 20)
     .class("player-selection")
     .style("z-index", position.label);
   playerSelection.option("-none-", "none");
-  teams[currentTeam].players.forEach((player) =>
+  //teams[currentTeam].players.forEach((player) =>
+  getAvailablePlayers().forEach((player) =>   
     playerSelection.option(player.name, player.id)
   );
-  if (player) playerSelection.selected(player.id);
-  else playerSelection.selected("none");
+  
+  // indicate selected player
+  if (player) 
+    playerSelection.selected(player.id);
+  else 
+    playerSelection.selected("none");
 
+  // handle change player event
   playerSelection.changed(() => {
     console.log("selected player:" + playerSelection.value());
     let positions =
@@ -369,7 +375,6 @@ function drawTeamPanel(isDisplayed) {
       teamPanel.toggleClass('team-panel-expand');
     });
 
-
     //draw team
     const teamList = createDiv("")
     .id("teamList")
@@ -421,10 +426,10 @@ function createPlayerAvailableBtn(player) {
     .mousePressed(() => {
       if(!isPlayerAvailable) 
         // add player to availability
-        availablePlayers.push(player.id)
+        addAvailability(player);
       else 
         // remove player from availability
-        availablePlayers.splice(availablePlayers.indexOf(player.id), 1);
+        removeAvailability(player);
       saveTeams(teams);
       //update ui
       isPlayerAvailable = !isPlayerAvailable;
@@ -432,6 +437,23 @@ function createPlayerAvailableBtn(player) {
       console.log("Player Game Availability changed");      
     });
     return availabilityCheckBox;
+}
+
+function removeAvailability(player) {
+  const availablePlayers = teams[currentTeam].games[currentGame].availablePlayers;
+  availablePlayers.splice(availablePlayers.indexOf(player.id), 1);
+  //remove player from all the innings in the current game
+  teams[currentTeam].games[currentGame].innings.forEach(inning => {
+    inning.positions.forEach(position => {
+      if(position.player?.id === player.id)
+        position.player = undefined;
+    });
+  });
+}
+
+function addAvailability(player) { 
+  const availablePlayers = teams[currentTeam].games[currentGame].availablePlayers;
+  availablePlayers.push(player.id)
 }
 
 function createPlayerDeleteBtn(player) { 
@@ -514,13 +536,17 @@ function createAutoFieldingButton() {
     const loadingIcon = createDiv("")
       .class("loading-icon")
       .position(width / 2 - 30, height / 2 + 120);
-    placePlayers(teams[currentTeam].players, positions, apiKey).then(() => {
+    placePlayers(getAvailablePlayers(), positions, apiKey).then(() => {      
       loadingIcon.remove();
       drawUi();
       createAutoFieldingButton();
       saveTeams(teams);
     });
   });
+}
+
+function getAvailablePlayers() {
+  return availablePlayers = teams[currentTeam].players.filter(player => teams[currentTeam].games[currentGame].availablePlayers.includes(player.id));
 }
 
 function drawDugout() {
