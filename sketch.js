@@ -431,7 +431,7 @@ function drawTeamPanel(isDisplayed) {
 
 function drawPlayerFieldingControl(playerFieldingControl, player=undefined) {
   playerFieldingControl.parent(teamPanel).style("border", "1px solid red").style("display:-cell;text-align:center");
-  const field = createImg("/field.png").parent(playerFieldingControl);
+  const field = createImg("./field.png").parent(playerFieldingControl);
 };
 
 function createPlayerAvailableBtn(player) { 
