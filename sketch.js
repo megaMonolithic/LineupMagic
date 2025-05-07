@@ -424,17 +424,34 @@ function drawTeamPanel(isDisplayed) {
     });
 
     //TODO draw delete button for existing player
-    
     drawPlayerFieldingControl(playerFieldingControl);
     
 }
 
 function drawPlayerFieldingControl(playerFieldingControl, player=undefined) {
   playerFieldingControl.parent(teamPanel)
-  //.style("border", "1px solid red")
-  .style("display:-cell;text-align:center");
-  const field = createImg("./field.png").parent(playerFieldingControl);
+    .style("display:-cell;text-align:center");
+  const field = createImg("./field.png")
+    .parent(playerFieldingControl);
+
+  createPlayerPositionToggle(185,620,player,playerFieldingControl); //1
+  createPlayerPositionToggle(185,672,player,playerFieldingControl); //2
+  createPlayerPositionToggle(240,620,player,playerFieldingControl); //3
+  createPlayerPositionToggle(210,590,player,playerFieldingControl); //4
+  createPlayerPositionToggle(135,620,player,playerFieldingControl); //5
+  createPlayerPositionToggle(165,590,player,playerFieldingControl); //6  
+  createPlayerPositionToggle(115,565,player,playerFieldingControl); //7
+  createPlayerPositionToggle(185,530,player,playerFieldingControl); //8
+  createPlayerPositionToggle(250,565,player,playerFieldingControl); //9
 };
+
+function createPlayerPositionToggle(x,y,player,playerFieldingControl) {
+  return createDiv('<span class="material-icons">radio_button_unchecked</span>')
+    .class("player-item-btn")
+    .parent(playerFieldingControl)
+    .style('position', 'absolute')
+    .position(x,y);  
+} 
 
 function createPlayerAvailableBtn(player) { 
   const availablePlayers = teams[currentTeam].games[currentGame].availablePlayers;
