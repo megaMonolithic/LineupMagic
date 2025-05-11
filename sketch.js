@@ -510,12 +510,34 @@ function createPlayerItemBtn(player) {
 
 function createPlayerUpBtn(player, players) { 
   return createButton('<span class="material-icons">expand_less</span>')
-  .class('player-item-btn');
+  .class('player-item-btn')
+  .mousePressed(() => {
+    const index = players.findIndex(p => p.id === player.id);
+    if (index <= 0) return; // Already at the top or not found
+    // swap orders
+    [players[index].order, players[index - 1].order] = [players[index - 1].order, players[index].order];
+    //swap positions
+    [players[index], players[index - 1]] = [players[index - 1], players[index]];
+    saveTeams(teams);
+    console.log(`Moved ${player.name} up in order to ${player.order}`);
+    drawTeamPanel(true);
+  });
 }
 
-function createPlayerDownBtn(player, players) { 
+function createPlayerDownBtn(player, players) {
   return createButton('<span class="material-icons">expand_more</span>')
-  .class('player-item-btn');
+    .class('player-item-btn')
+    .mousePressed(() => {
+      const index = players.findIndex(p => p.id === player.id);
+      if (index === -1 || index >= players.length - 1) return; // Already at bottom or not found
+      // Swap orders
+      [players[index].order, players[index + 1].order] = [players[index + 1].order, players[index].order];
+      // Swap positions
+      [players[index], players[index + 1]] = [players[index + 1], players[index]];
+      saveTeams(teams);
+      console.log(`Moved ${player.name} down in order to ${player.order}`);
+      drawTeamPanel(true);
+    });
 }
 
 function createAddRankBtn(player) {
