@@ -338,7 +338,8 @@ function drawPlayerPosition(position, currentTeam) {
     if (playerSelection.value() === "none") 
       position.player = undefined;
     else 
-      position.player = teams[currentTeam].players[playerSelection.value()];
+      //position.player = teams[currentTeam].players[playerSelection.value()];
+      position.player = teams[currentTeam].players.find(p => p.id.toString() === playerSelection.value());
 
     drawUi();
     scrollToPageTop();
