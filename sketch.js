@@ -12,8 +12,9 @@ let currentPlayer = undefined;
 let positionLocations;
 
 let teams;
-
 let teamPanel;
+
+let playerGrid;
 
 function setup() {
   // setup the canvas
@@ -40,6 +41,7 @@ function setup() {
 
   //load teams
   teams = loadTeams();
+  playerGrid = createDiv();
 
   //draw ui elements
   drawUi();
@@ -64,6 +66,7 @@ function drawUi() {
   drawBaseballField(width / 2, height / 2 + 80, 500, 600, "BROWN");
   drawBaseballDiamond(width / 2, height / 2 - 40, 200, 200); // Call function to draw the diamond
   drawAllPlayerPositions();
+  drawPlayerTable(playerGrid, teams[currentTeam].games[currentGame].innings,0,600);
 }
 
 function drawTopNav() {
@@ -338,7 +341,6 @@ function drawPlayerPosition(position, currentTeam) {
     if (playerSelection.value() === "none") 
       position.player = undefined;
     else 
-      //position.player = teams[currentTeam].players[playerSelection.value()];
       position.player = teams[currentTeam].players.find(p => p.id.toString() === playerSelection.value());
 
     drawUi();

@@ -303,3 +303,36 @@ p.team-list {
 .player-item p {
   margin-top:3px;
 }
+
+.player-panel {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .75em;
+  max-height: 150px;
+  border: 1px solid #ccc;
+  background-color: #e4e4e4;
+  padding: 10px;
+  position: absolute;
+  top: 600px;
+  left: 0px;
+  display: table-cell;
+  box-shadow: 0px -4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.player-panel-expand {
+  position: absolute;
+  max-height: 280px;
+  top:485px;
+}
+
+.player-panel table {
+  margin: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.player-panel th,
+.player-panel td {
+  padding: 4px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
