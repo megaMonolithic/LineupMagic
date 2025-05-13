@@ -67,9 +67,9 @@ let hardcodedTeams = [
       { 
         id: 9, 
         name: "Weston", 
-        positions: "2,9,0", 
+        positions: "3,9,0", 
         order: 10, 
-        rank: 2 
+        rank: 1
       },
       { 
         id: 10, 
