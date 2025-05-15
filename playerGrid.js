@@ -41,10 +41,14 @@ function drawPlayerTable(playerGrid, innings, x, y) {
       row.child(nameCell);
   
       for (let inning of innings) {
-        let cellText = 'X';
+        let cellText = '';
         for (let pos of inning.positions) {
           if (pos.label < 10 && pos.player && pos.player.name === player) {
             cellText = pos.label;
+            break;
+          } 
+          else if(pos.label > 9 && pos.player && pos.player.name === player) {
+            cellText = 'x';
             break;
           }
         }

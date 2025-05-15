@@ -13,6 +13,7 @@ let positionLocations;
 
 let teams;
 let teamPanel;
+let topPanel;
 
 let playerGrid;
 
@@ -70,6 +71,8 @@ function drawUi() {
 }
 
 function drawTopNav() {
+  drawTopPanel(false);
+
   const topNavContainer = createDiv("")
     .class("nav-container")
     .style("width", `${width}px`)
@@ -117,15 +120,24 @@ function drawTopNav() {
   teams[currentTeam].games.forEach((game, index) =>
     gameSelection.option(game.name, index)
   );
+  gameSelection.option('+ Add New Game', '100');
 
   gameSelection.selected(currentGame);
   gameSelection.changed(() => {
-    currentGame = gameSelection.value();
-    currentInning = 0;
-    console.log(`selected game ${currentGame}`);
-    drawUi();
-    topNavContainer.remove();
-    drawTopNav();
+    if(gameSelection.value() === '100') {
+      console.log('adding new game');
+      gameSelection.selected(currentGame);
+      topPanel.toggleClass('top-panel-expand');
+      drawAddGame();
+    } else {
+      currentGame = gameSelection.value();
+      currentInning = 0;
+      console.log(`selected game ${currentGame}`);
+      drawUi();
+      topNavContainer.remove();
+      drawTopNav();
+    }
+
   });
 
   //innings
@@ -148,6 +160,41 @@ function drawTopNav() {
     tabButton.mousePressed(() => selectTab(index, tabContainer));
     tabContainer.child(tabButton);
   });
+}
+
+function drawAddGame() {
+  const addGameDiv = createDiv('')
+    .style('flex', 'row')
+    .parent(topPanel);
+
+  const gameLocation = createSelect()
+    .class('team-selection')
+    .parent(addGameDiv);
+  gameLocation.option('V', 'v');
+  gameLocation.option('@', '@');
+  gameLocation.selected('v');
+  
+  const gameName = createInput()
+    //.class('team-selection')
+    .style('width','10em')
+    .parent(addGameDiv);
+
+  const saveGame = createButton('Save')
+  .attribute('placeholder', '.. opponent ..')
+  .style('margin: 5px 5px 5px 5px')  
+  .parent(addGameDiv);
+
+  const closeTopPanelBtn = createButton("<span class='material-icons'>close</span>")
+    .class("close-btn")
+    .style('padding', '5px 2px 5px 2px')
+    .parent(addGameDiv)
+    .mousePressed(() => {
+      console.debug("closing top panel");
+      //topPanel.html('');
+      addGameDiv.remove();
+      drawUi();
+      topPanel.toggleClass('top-panel-expand');
+    });
 }
 
 function drawInnings() {
@@ -349,6 +396,18 @@ function drawPlayerPosition(position, currentTeam) {
   });
 
   pop();
+}
+
+
+function drawTopPanel(isDisplayed) {
+  if(topPanel)
+    topPanel.remove();
+
+  topPanel = createDiv("")
+    .class("top-panel");
+
+  if(isDisplayed)
+    topPanel.toggleClass('top-panel-expand');
 }
 
 function createTeamButton() {

@@ -336,3 +336,22 @@ p.team-list {
   border: 1px solid #ccc;
   text-align: center;
 }
+
+.top-panel {
+  position: absolute;
+  left: 0px;
+  top: 32px;
+  height: 0;
+  background-color: #f4f4f4;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.7);
+  transform: translateX(-0);
+  width: 100%;
+  transition: height 0.15s ease-in-out;
+  z-index: 1000; 
+  /* border: 1px solid red;  */
+  /* visibility: hidden; */
+}
+
+.top-panel-expand {
+  height: 60px;
+}
