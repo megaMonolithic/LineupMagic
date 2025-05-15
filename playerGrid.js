@@ -64,13 +64,7 @@ function drawPlayerTable(playerGrid, innings, x, y) {
   }
   
   function getAllPlayers(innings) {
-    let playerSet = new Set();
-    for (let inning of innings) {
-      for (let pos of inning.positions) {
-        if (pos.player) {
-          playerSet.add(pos.player.name);
-        }
-      }
-    }
-    return Array.from(playerSet);
+    return getAvailablePlayers()
+    .sort((a, b) => a.order - b.order)
+    .map(player => player.name);
   }
